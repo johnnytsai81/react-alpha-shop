@@ -3,13 +3,13 @@ import {cartItems} from './Cart.jsx';
 import {ReactComponent as IconMinus} from '../../../icons/minus.svg';
 import {ReactComponent as IconPlus} from '../../../icons/plus.svg';
 
-const CartListInner = styled.div`
+const CartContainer = styled.div`
   .img-container{
     border-radius: 8px;
   }
 `
 
-function CartContainer({item}) {
+function CartList({item}) {
   return (
     <div className="product-container col col-12" data-count="1" data-price={item.price}>
       <img className="img-container" alt={item.name} src={item.img} />
@@ -28,13 +28,13 @@ function CartContainer({item}) {
   );
 };
 
-function CartList() {
+export function Cart() {
   return (
-    <CartListInner>
+    <CartContainer>
      <h3 className="cart-title">購物籃</h3>
       <section className="product-list col col-12" data-total-price="0">
         {cartItems.map(cartItem =>
-          <CartContainer item={cartItem} key={cartItem.id} />
+          <CartList item={cartItem} key={cartItem.id} />
         )}
       </section>
       <section className="cart-info shipping col col-12">
@@ -45,14 +45,6 @@ function CartList() {
         <div className="text">小計</div>
         <div className="price">$5290</div>
       </section>
-    </CartListInner>
-  );
-}
-
-export function Cart() {
-  return (
-    <>
-      <CartList />
-    </>
+    </CartContainer>
   )
 }

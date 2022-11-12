@@ -13,13 +13,13 @@ import { device } from '../../constants/style';
 
 // main區塊
 const MainStyle = styled.div`
-  display: grid;
-  grid-template-columns: 100%;
-  
-
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   @media ${device.tabletL} {
-    grid-template-columns: 6fr 5fr;
+    flex-direction: row;
+    align-items: baseline;
     gap: 3rem;
   }
 
@@ -29,8 +29,13 @@ const MainStyle = styled.div`
   }
 `
 
-// 左邊購物車區塊
+// 購物車區塊
+const LeftContainer = styled.div`
+  flex: 7 1 0;
+`
+
 const RightContainer = styled.div`
+  flex: 5 1 0;
   padding: 3rem;
   border: 1px solid #F0F0F5;
   border-radius: 8px;
@@ -51,7 +56,7 @@ const StepDisplay = styled.div`
 export default function Main() {
   return (
     <MainStyle>
-      <div className="left-container">
+      <LeftContainer>
         <h2 className="register-title">結帳</h2>
         <StepProgress />
         <StepDisplay step={'1'}>
@@ -64,7 +69,7 @@ export default function Main() {
           <StepThree />
         </StepDisplay>
         <ProgressControl />
-      </div>
+      </LeftContainer>
       <RightContainer>
         <Cart />
       </RightContainer>

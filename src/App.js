@@ -1,4 +1,4 @@
-import Main from './components/main/Main';
+import Main from './components/main';
 
 import styled from 'styled-components';
 // 引用斷點

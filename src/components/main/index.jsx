@@ -1,11 +1,11 @@
-
+import { useState } from 'react';
 import "../../style/app.css";
-import { ProgressControl } from "./ProgressControl";
-import { StepOne } from "./StepOne";
-import { StepTwo } from "./StepTwo";
-import { StepThree } from "./StepThree";
-import { StepProgress } from "./StepProgress";
-import { Cart } from "./cart/Cart";
+import { ProgressControl } from "./progressControl";
+import { StepProgress } from "./stepProgress";
+import { StepOne } from "./step/StepOne";
+import { StepTwo } from "./step/StepTwo";
+import { StepThree } from "./step/StepThree";
+import { Cart } from "./cart";
 
 import styled from 'styled-components';
 // 引用斷點
@@ -46,33 +46,22 @@ const RightContainer = styled.div`
   }
 `
 
-const StepDisplay = styled.div`
-  display: none;
-  ${props => props.step === '1' && `
-  display: block;
-  `}
-`
-
 export default function Main() {
+  const [index, setIndex] = useState(0)
+  
   return (
     <MainStyle>
       <LeftContainer>
         <h2 className="register-title">結帳</h2>
-        <StepProgress />
-        <StepDisplay step={'1'}>
-          <StepOne />
-        </StepDisplay>
-        <StepDisplay step={'2'}>
-          <StepTwo />
-        </StepDisplay>
-        <StepDisplay step={'3'}>
-          <StepThree />
-        </StepDisplay>
-        <ProgressControl />
+        <StepProgress index={index} setIndex={setIndex}/>
+        {index === 0 && <StepOne />}
+        {index === 1 && <StepTwo />}
+        {index === 2 && <StepThree />}
+        <ProgressControl index={index} setIndex={setIndex}/>
       </LeftContainer>
       <RightContainer>
         <Cart />
       </RightContainer>
     </MainStyle>
-  );
+  )
 }

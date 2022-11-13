@@ -6,7 +6,7 @@
 因為還沒有加入程式判斷，所以顯示的畫面都是使用step變數去做手動操控。
 
 ## Project Preview
-![image](public/images/preview_4.png)
+![image](public/images/preview_5.png)
 
 ## Project Usage Guide
   1. `npm install` 安裝所需要的檔案

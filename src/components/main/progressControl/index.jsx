@@ -3,6 +3,8 @@ import {progressBtn} from './ProgressControl';
 import {ReactComponent as RightArrow} from '../../../icons/right-arrow.svg';
 import {ReactComponent as LeftArrow} from '../../../icons/left-arrow.svg';
 
+import { useContext } from "react";
+import { CartContext } from "../../../contexts/CartContext";
 // 按鈕控制區塊樣式
 const Control = styled.section`
   margin-top: 2rem;
@@ -24,38 +26,41 @@ const Control = styled.section`
   
 `
 
-export function ProgressControl(props) {
-  let index = props.index
-  let setIndex = props.setIndex
-
-  let hasPrev = index > 0;
-  let hasNext = index < progressBtn.length - 1;
-
-  function btnPrevClick() {
-    if (hasPrev) {
-      setIndex(index - 1);
-    }
+export function ProgressControl({index,setIndex}) {
+  const { handleFormSubmit } = useContext(CartContext)
+  function PrevBtn({ setIndex }) {
+    return (
+      <button className="prev" onClick={() => setIndex(index => index - 1)}>
+        <LeftArrow />
+        上一步
+      </button>
+    )
   }
 
-  function btnNextClick() {
-    if (hasNext) {
-      setIndex(index + 1);
-    }
+  function NextBtn({ setIndex }) {
+    return (
+      <button className="next" onClick={() => setIndex(index => index + 1)}>
+        下一步
+        <RightArrow />
+      </button>
+    )
+  }
+
+  function CompleteBtn() {
+    return (
+      <button className="next" onClick={handleFormSubmit}>
+        確認下單
+      </button>
+    )
   }
 
   let step = progressBtn[index];
-
   return (
     <Control>
       <section className="button-group" data-phase={step.phase}>
-        <button className="prev cursor-point" onClick={btnPrevClick} disabled={!hasPrev} alt="">
-          <LeftArrow disabled={!hasPrev}></LeftArrow>
-          {step.prev}
-        </button>
-        <button className="next cursor-point" onClick={btnNextClick} disabled={!hasNext} alt="">
-          {step.next}
-          <RightArrow disabled={!hasPrev}></RightArrow>
-        </button>
+        {index === 0 && <NextBtn  setIndex={setIndex} />}
+        {index === 1 && <><PrevBtn setIndex={setIndex} /><NextBtn setIndex={setIndex} /></>}
+        {index === 2 && <><PrevBtn setIndex={setIndex} /><CompleteBtn /></>}
       </section>
     </Control>
   )

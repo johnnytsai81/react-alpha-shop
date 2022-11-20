@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import {ReactComponent as CheckIcon} from '../../../icons/check.svg';
 
+import { useContext } from "react"
+import { CartContext } from "../../../contexts/CartContext"
+
 const ProgressStyle = styled.section`
   display:flex;
   .progress-wrap{
@@ -59,15 +62,13 @@ function ProgressGroup (props) {
   );
 }
 
-
-export function StepProgress(props) {
-  let index = props.index
-
+export function StepProgress() {
+  const {index, setIndex} = useContext(CartContext)
   return (
     <ProgressStyle className="progress-container">
-      <ProgressGroup content={{ text: '1', label: '寄送地址' }} phase={'address'} order={'1'} index={index}/>
-      <ProgressGroup content={{ text: '2', label: '運送方式' }} phase={'shipping'} order={'2'} index={index}/>
-      <ProgressGroup content={{ text: '3', label: '付款資訊' }} phase={'credit-card'} order={'3'} index={index}/>
+      <ProgressGroup content={{ text: '1', label: '寄送地址' }} phase={'address'} order={'1'} index={index} setIndex={setIndex}/>
+      <ProgressGroup content={{ text: '2', label: '運送方式' }} phase={'shipping'} order={'2'} index={index} setIndex={setIndex}/>
+      <ProgressGroup content={{ text: '3', label: '付款資訊' }} phase={'credit-card'} order={'3'} index={index} setIndex={setIndex}/>
     </ProgressStyle>
   )
 }

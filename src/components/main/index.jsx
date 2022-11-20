@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import "../../style/app.css";
 import { ProgressControl } from "./progressControl";
 import { StepProgress } from "./stepProgress";
@@ -10,6 +9,9 @@ import { Cart } from "./cart";
 import styled from 'styled-components';
 // 引用斷點
 import { device } from '../../constants/style';
+// 載入usecontext
+import { useContext } from "react"
+import { CartContext } from "../../contexts/CartContext"
 
 // main區塊
 const MainStyle = styled.div`
@@ -47,8 +49,7 @@ const RightContainer = styled.div`
 `
 
 export default function Main() {
-  const [index, setIndex] = useState(0)
-  
+  const {index, setIndex} = useContext(CartContext)
   return (
     <MainStyle>
       <LeftContainer>

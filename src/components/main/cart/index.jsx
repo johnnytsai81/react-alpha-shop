@@ -1,11 +1,12 @@
-import { useState } from "react"
+import { useEffect } from "react"
 import styles from './cart.scss'
-import {cartItems} from './Cart';
 import {ReactComponent as IconMinus} from '../../../icons/minus.svg';
 import {ReactComponent as IconPlus} from '../../../icons/plus.svg';
 
-function CartList({ products, setProducts }) {
+import { CartContext } from "../../../contexts/CartContext"
+import { useContext} from "react"
 
+function CartList({products,setProducts}) {
   function handleDecreaseClick(productId) {
     let nextProducts = products.map(product => {
       if (product.id === productId) {
@@ -37,6 +38,7 @@ function CartList({ products, setProducts }) {
     });
     setProducts(nextProducts)
   }
+  
   return (
     products.map(item =>
       <div className="product-container col col-12" key={item.id}>
@@ -50,7 +52,7 @@ function CartList({ products, setProducts }) {
               <IconPlus className="product-action plus" onClick={() => { handleIncreaseClick(item.id) }} alt="{item.name}"></IconPlus>
             </div>
           </div>
-          <div className="price">{item.price}</div>
+          <div className="price" name="totalPrice">{item.price}</div>
         </div>
       </div>
     )
@@ -58,11 +60,17 @@ function CartList({ products, setProducts }) {
 };
 
 export function Cart() {
-  const [products, setProducts] = useState(cartItems)
+  const {products, setProducts} = useContext(CartContext)
+  const {formData, setFormData} = useContext(CartContext)
   let totalPrice = 0
-  products.forEach(data => {
-    totalPrice += data.price * data.quantity
+  products.forEach((data) => {
+    (totalPrice += data.price * data.quantity)
   })
+  useEffect(() => {
+    let key = 'totalPrice'
+    setFormData({ ...formData, [key]: totalPrice })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPrice])
 
   return (
     <div className={styles.container}>

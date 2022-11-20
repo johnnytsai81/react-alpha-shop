@@ -4,6 +4,8 @@ import styled from 'styled-components';
 // 引用斷點
 import { device } from './constants/style';
 
+import { ContextProvider } from "./contexts/CartContext"
+
 const Container = styled.div`
   padding: 3rem 1rem;
   margin: auto;
@@ -89,10 +91,10 @@ const Container = styled.div`
 
 export default function App() {
   return (
-    <div className="App">
+    <ContextProvider className="App">
       <Container>
         <Main />
       </Container>
-    </div>
+    </ContextProvider>
   );
 }
